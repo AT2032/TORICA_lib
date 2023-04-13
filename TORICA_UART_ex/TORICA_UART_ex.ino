@@ -1,16 +1,15 @@
 #include <TORICA_UART.h>
 
-TORICA_UART Alt_UART(&Serial3);
+TORICA_UART my_torica_uart(&Serial1);
 
 void setup() {
   SerialUSB.begin(115200);
-  Serial3.begin(115200);
+  Serial1.begin(115200);
 }
 
 void loop() {
-  int readnum = Alt_UART.readUART();
+  int readnum = my_torica_uart.readUART();
   for (int j = 0; j < readnum; j++) {
-    SerialUSB.println(Alt_UART.UART_data[j]);
+    SerialUSB.println(my_torica_uart.UART_data[j]);
   }
-   Serial3.println("Hello");
 }
