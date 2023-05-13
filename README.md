@@ -8,33 +8,34 @@
 
 ## TORICA_SD
 SDカードに文字列を書き込むためのライブラリです．
-* `add_str`で文字列をmy_torica_sd内のバッファに保存し，`flash`でSDカードに書き込みます．`add_str`の文字列はchar配列でヌル終端されている必要があります．
-  バッファを切り替えるため，`flash`中に`add_str`を呼び出してもデータは失われずに次の`flash`で書き込まれます．
-  ```cpp
-  #include <TORICA_SD.h>
+* `add_str`で文字列をmy_torica_sd内のバッファに保存し，`flash`でSDカードに書き込みます．
+* `add_str`の文字列はchar配列でヌル終端されている必要があります．
+* バッファを切り替えるため，`flash`中に割り込みなどで`add_str`を呼び出してもデータは失われずに次の`flash`で書き込まれます．
+```cpp
+#include <TORICA_SD.h>
 
-  int cs_SD = 0;
-  TORICA_SD my_torica_sd(cs_SD);
+int cs_SD = 0;
+TORICA_SD my_torica_sd(cs_SD);
 
-  char SD_BUF[256];
+char SD_BUF[256];
 
-  void setup()
+void setup()
+{
+  my_torica_sd.begin();
+}
+
+void loop()
+{
+  for (int i = 0; i < 100; i++)
   {
-    my_torica_sd.begin();
+    sprintf(SD_BUF, "TEST,%d,%.2f,%.2f\n", millis(), 12.34, 334);
+    // my_torica_sd内のバッファに保存
+    my_torica_sd.add_str(SD_BUF);
   }
-
-  void loop()
-  {
-    for (int i = 0; i < 100; i++)
-    {
-      sprintf(SD_BUF, "TEST,%d,%.2f,%.2f\n", millis(), 12.34, 334);
-      // my_torica_sd内のバッファに保存
-      my_torica_sd.add_str(SD_BUF);
-    }
-    // SDに書き込み
-    my_torica_sd.flash();
-  }
-  ```
+  // SDに書き込み
+  my_torica_sd.flash();
+}
+```
 
 ## TORICA_UART
 ```,```区切りの少数が並んだ文字列を受信してパースするライブラリです．
