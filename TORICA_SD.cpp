@@ -24,7 +24,7 @@ void TORICA_SD::add_str(char str[])
   {
     int str_len = strlen(str);
     memcpy((void *)&SD_buf[SD_buf_index][SD_buf_count[SD_buf_index]], (void *)str, str_len * sizeof(char));
-    if (SD_buf_count[SD_buf_index] < 32768 - str_len)
+    if (SD_buf_count[SD_buf_index] < TORICA_SD_BUF_SIZE - str_len)
     {
       SD_buf_count[SD_buf_index] += str_len;
     }

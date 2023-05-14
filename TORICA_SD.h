@@ -4,7 +4,7 @@
 #define TORICA_SD_BUF_SIZE 32768
 #elif defined(ARDUINO_SEEED_XIAO_M0)
 // XIAO RAM 32KB
-#define TORICA_SD_BUF_SIZE 8192
+#define TORICA_SD_BUF_SIZE 4096
 #else
 // other board
 #define TORICA_SD_BUF_SIZE 1024
