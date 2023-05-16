@@ -10,6 +10,7 @@
 #else
 // other board
 #define TORICA_SD_BUF_SIZE 1024
+#define SERIAL_USB Serial
 #endif
 
 #include <Arduino.h>
