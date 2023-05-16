@@ -5,15 +5,15 @@
 
 bool TORICA_SD::begin()
 {
-  SerialUSB.print("Initializing SD card...");
+  SERIAL_USB.print("Initializing SD card...");
   if (!SD.begin(cs_SD))
   {
-    SerialUSB.println("Card failed, or not present");
+    SERIAL_USB.println("Card failed, or not present");
     SDisActive = false;
     return false;
   }
   new_file();
-  SerialUSB.println("card initialized.");
+  SERIAL_USB.println("card initialized.");
   SDisActive = true;
   return true;
 }
@@ -30,7 +30,7 @@ void TORICA_SD::add_str(char str[])
     }
     else
     {
-      SerialUSB.println("overflow");
+      SERIAL_USB.println("overflow");
     }
   }
 }
@@ -82,21 +82,21 @@ void TORICA_SD::flash()
 
     dataFile.close();
 
-    SerialUSB.println("SD_buf_count,SD_total");
-    SerialUSB.print(SD_buf_count[previous_index]);
-    SerialUSB.print(",");
+    SERIAL_USB.println("SD_buf_count,SD_total");
+    SERIAL_USB.print(SD_buf_count[previous_index]);
+    SERIAL_USB.print(",");
     int SD_total = millis() - SD_time;
-    SerialUSB.println(SD_total);
+    SERIAL_USB.println(SD_total);
 
     if (SD_total > 2000)
     {
-      SerialUSB.println("too long time");
+      SERIAL_USB.println("too long time");
       end();
     }
   }
   else
   {
-    SerialUSB.println("error opening file");
+    SERIAL_USB.println("error opening file");
     end();
     SDisActive = begin();
   }

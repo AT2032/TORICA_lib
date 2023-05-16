@@ -2,9 +2,11 @@
 #if defined(ARDUINO_SAM_DUE)
 // DUE RAM 96KB
 #define TORICA_SD_BUF_SIZE 32768
+#define SERIAL_USB SerialUSB
 #elif defined(ARDUINO_SEEED_XIAO_M0)
 // XIAO RAM 32KB
 #define TORICA_SD_BUF_SIZE 4096
+#define SERIAL_USB Serial
 #else
 // other board
 #define TORICA_SD_BUF_SIZE 1024
