@@ -6,7 +6,15 @@
 bool TORICA_SD::begin()
 {
   SERIAL_USB.print("Initializing SD card...");
+#if defined(SEEED_XIAO_RP2040)
+  SPI.setRX(SD_SPI_MISO);
+  SPI.setCS(SD_SPI_CSn);
+  SPI.setSCK(SD_SPI_SCK);
+  SPI.setTX(SD_SPI_MOSI);
+  if (!SD.begin(cs_SD, SPI))
+#else
   if (!SD.begin(cs_SD))
+#endif
   {
     SERIAL_USB.println("Card failed, or not present");
     SDisActive = false;

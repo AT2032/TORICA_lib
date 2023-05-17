@@ -1,6 +1,6 @@
 #include <TORICA_SD.h>
 
-int cs_SD = 0;
+int cs_SD = 28; // XIAO RP2040ならRP2040のGPIO番号で指定
 TORICA_SD my_torica_sd(cs_SD);
 
 char SD_BUF[256];
@@ -20,4 +20,5 @@ void loop()
   }
   // SDに書き込み
   my_torica_sd.flash();
+  delay(1000);
 }
