@@ -70,11 +70,12 @@ void TORICA_SD::new_file()
     fileNum++;
   }
   file_time = millis();
+  file_size = 0;
 }
 
 void TORICA_SD::flash()
 {
-  unsigned long SD_time = millis();
+  uint32_t SD_time = millis();
   int previous_index = SD_buf_index;
   SD_buf_index = (SD_buf_index + 1) % 2;
 
@@ -82,18 +83,24 @@ void TORICA_SD::flash()
   {
     new_file();
   }
+  if (file_size >= TORICA_SD_MAX_FILE_SIZE)
+  {
+    SERIAL_USB.println("TORICA_SD_MAX_FILE_SIZE");
+    new_file();
+  }
 
   dataFile = SD.open(fileName, FILE_WRITE);
   if (dataFile)
   {
     dataFile.write((char *)SD_buf[previous_index], sizeof(char) * (SD_buf_count[previous_index]));
+    file_size += sizeof(char) * (SD_buf_count[previous_index]);
 
     dataFile.close();
 
     SERIAL_USB.println("SD_buf_count,SD_total");
     SERIAL_USB.print(SD_buf_count[previous_index]);
     SERIAL_USB.print(",");
-    int SD_total = millis() - SD_time;
+    uint32_t SD_total = millis() - SD_time;
     SERIAL_USB.println(SD_total);
 
     if (SD_total > 2000)

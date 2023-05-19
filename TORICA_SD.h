@@ -23,6 +23,8 @@
 #define SERIAL_USB Serial
 #endif
 
+#define TORICA_SD_MAX_FILE_SIZE 1048576
+
 #include <Arduino.h>
 #include <SPI.h>
 #include <SD.h>
@@ -48,7 +50,8 @@ private:
   int cs_SD = LED_BUILTIN;
   char fileName[16];
   File dataFile;
-  char SD_buf[2][TORICA_SD_BUF_SIZE];
+  uint32_t file_size = 0;
+  volatile char SD_buf[2][TORICA_SD_BUF_SIZE];
   volatile int SD_buf_index = 0;
-  int SD_buf_count[2] = {0, 0};
+  volatile uint32_t SD_buf_count[2] = {0, 0};
 };
