@@ -3,14 +3,17 @@
 // DUE RAM 96KB
 #define TORICA_SD_BUF_SIZE 32768
 #define SERIAL_USB SerialUSB
+#define TORICA_SD_MAX_FILE_SIZE 1048576
 #elif defined(ARDUINO_SEEED_XIAO_M0)
 // XIAO RAM 32KB
 #define TORICA_SD_BUF_SIZE 4096
 #define SERIAL_USB Serial
+#define TORICA_SD_MAX_FILE_SIZE 1048576
 // RP2040 RAM 264KB
 #elif defined(SEEED_XIAO_RP2040)
 #define TORICA_SD_BUF_SIZE 32768
 #define SERIAL_USB Serial
+#define TORICA_SD_MAX_FILE_SIZE 1048576
 // https://files.seeedstudio.com/wiki/XIAO-RP2040/res/Seeed-Studio-XIAO-RP2040-v1.3.pdf
 // setCSはハードウェアCSピンじゃないとpanicするので一旦17ピン(赤LED)で設定
 #define SD_SPI_SCK (2)
@@ -21,9 +24,9 @@
 // other board
 #define TORICA_SD_BUF_SIZE 1024
 #define SERIAL_USB Serial
+#define TORICA_SD_MAX_FILE_SIZE 1048576
 #endif
 
-#define TORICA_SD_MAX_FILE_SIZE 1048576
 
 #include <Arduino.h>
 #include <SPI.h>
