@@ -1,5 +1,6 @@
 #include "TORICA_UART.h"
 #include <Arduino.h>
+#include <stdlib.h>
 
 int TORICA_UART::readUART()
 {
@@ -10,14 +11,14 @@ int TORICA_UART::readUART()
     if (buff[i_buff] == '\n')
     {
       buff[i_buff] == '\0';
-      UART_data[0] = atof(strtok(buff, ","));
+      UART_data[0] = strtof(strtok(buff, ","), NULL);
       int i_UART_data;
       for (i_UART_data = 1; true; i_UART_data++)
       {
         p = strtok(NULL, ",");
         if (p != NULL)
         {
-          UART_data[i_UART_data] = atof(p);
+          UART_data[i_UART_data] = strtof(p, NULL);
         }
         else
         {
