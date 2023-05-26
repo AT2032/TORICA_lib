@@ -11,7 +11,7 @@
 #define TORICA_SD_MAX_FILE_SIZE 1048576
 // RP2040 RAM 264KB
 #elif defined(SEEED_XIAO_RP2040)
-#define TORICA_SD_BUF_SIZE 32768
+#define TORICA_SD_BUF_SIZE 16384
 #define SERIAL_USB Serial
 #define TORICA_SD_MAX_FILE_SIZE 1048576
 // https://files.seeedstudio.com/wiki/XIAO-RP2040/res/Seeed-Studio-XIAO-RP2040-v1.3.pdf
