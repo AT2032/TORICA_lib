@@ -51,7 +51,7 @@ private:
   volatile uint32_t file_time = 0;
 
   volatile int cs_SD = LED_BUILTIN;
-  volatile char fileName[16];
+  char fileName[16];
   File dataFile;
   volatile uint32_t file_size = 0;
   volatile char SD_buf[2][TORICA_SD_BUF_SIZE];
