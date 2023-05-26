@@ -1,7 +1,7 @@
 // https://qiita.com/MergeCells/items/85a860150735730faabc
 #if defined(ARDUINO_SAM_DUE)
 // DUE RAM 96KB
-#define TORICA_SD_BUF_SIZE 32768
+#define TORICA_SD_BUF_SIZE 4096
 #define SERIAL_USB SerialUSB
 #define TORICA_SD_MAX_FILE_SIZE 1048576
 #elif defined(ARDUINO_SEEED_XIAO_M0)
@@ -11,7 +11,7 @@
 #define TORICA_SD_MAX_FILE_SIZE 1048576
 // RP2040 RAM 264KB
 #elif defined(SEEED_XIAO_RP2040)
-#define TORICA_SD_BUF_SIZE 16384
+#define TORICA_SD_BUF_SIZE 4096
 #define SERIAL_USB Serial
 #define TORICA_SD_MAX_FILE_SIZE 1048576
 // https://files.seeedstudio.com/wiki/XIAO-RP2040/res/Seeed-Studio-XIAO-RP2040-v1.3.pdf
