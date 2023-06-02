@@ -77,7 +77,7 @@ void TORICA_SD::flash()
 {
   uint32_t SD_time = millis();
   int previous_index = SD_buf_index;
-  SD_buf_index = (SD_buf_index + 1) % 2;
+  SD_buf_index = (previous_index + 1) % 2;
 
   if (millis() - file_time > 10 * 60 * 1000)
   {
