@@ -21,25 +21,20 @@ bool TORICA_SD::begin()
     return false;
   }
   new_file();
+  dataFile = SD.open(fileName, FILE_WRITE);
+
   SERIAL_USB.println("card initialized.");
+
   SDisActive = true;
   return true;
+
 }
 
 void TORICA_SD::add_str(char str[])
 {
   if (SDisActive)
   {
-    int str_len = strlen(str);
-    memcpy((void *)&SD_buf[SD_buf_index][SD_buf_count[SD_buf_index]], (void *)str, str_len * sizeof(char));
-    if (SD_buf_count[SD_buf_index] < TORICA_SD_BUF_SIZE - str_len)
-    {
-      SD_buf_count[SD_buf_index] += str_len;
-    }
-    else
-    {
-      SERIAL_USB.println("overflow");
-    }
+    dataFile.write(str,strlen(str));
   }
 }
 
@@ -70,44 +65,33 @@ void TORICA_SD::new_file()
     fileNum++;
   }
   file_time = millis();
-  file_size = 0;
 }
 
 void TORICA_SD::flash()
 {
   uint32_t SD_time = millis();
-  int previous_index = SD_buf_index;
-  SD_buf_index = (previous_index + 1) % 2;
 
   if (millis() - file_time > 10 * 60 * 1000)
   {
+    dataFile.close();
     new_file();
+    dataFile = SD.open(fileName, FILE_WRITE);
   }
-  if (file_size >= TORICA_SD_MAX_FILE_SIZE)
+  if (dataFile.size() >= TORICA_SD_MAX_FILE_SIZE)
   {
     SERIAL_USB.println("TORICA_SD_MAX_FILE_SIZE");
+    dataFile.close();
     new_file();
+    dataFile = SD.open(fileName, FILE_WRITE);
   }
 
-  dataFile = SD.open(fileName, FILE_WRITE);
   if (dataFile)
   {
-    dataFile.write((char *)SD_buf[previous_index], sizeof(char) * (SD_buf_count[previous_index]));
-    file_size += sizeof(char) * (SD_buf_count[previous_index]);
-
-    dataFile.close();
-
+    dataFile.flush();
     SERIAL_USB.println("SD_buf_count,SD_total");
-    SERIAL_USB.print(SD_buf_count[previous_index]);
     SERIAL_USB.print(",");
     uint32_t SD_total = millis() - SD_time;
     SERIAL_USB.println(SD_total);
-
-    if (SD_total > 2000)
-    {
-      SERIAL_USB.println("too long time");
-      end();
-    }
   }
   else
   {
@@ -115,13 +99,9 @@ void TORICA_SD::flash()
     end();
     SDisActive = begin();
   }
-  SD_buf_count[previous_index] = 0;
 }
 
-void TORICA_SD::end()
-{
-  SD_buf_count[0] = 0;
-  SD_buf_count[1] = 0;
+void TORICA_SD::end(){
   SDisActive = false;
   SD.end();
 }
