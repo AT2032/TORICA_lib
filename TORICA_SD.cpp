@@ -88,10 +88,10 @@ void TORICA_SD::flash()
   if (dataFile)
   {
     dataFile.flush();
-    SERIAL_USB.println("SD_buf_count,SD_total");
-    SERIAL_USB.print(",");
+    //SERIAL_USB.println("SD_buf_count,SD_total");
+    //SERIAL_USB.print(",");
     uint32_t SD_total = millis() - SD_time;
-    SERIAL_USB.println(SD_total);
+    //SERIAL_USB.println(SD_total);
   }
   else
   {
