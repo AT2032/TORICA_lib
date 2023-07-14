@@ -5,15 +5,14 @@
 //質問（このクラスオブジェクトの生成をしないとしたのCONVERT_numでtalk_strが使えないのではないか？）
 
 
-void TORICA_talk::talk_num(int num){
+
+void TORICA_talk::talk_num(float num){
 
   char str[64];
-  sprintf(str,"<NUM VAL=%d>",num);
+  sprintf(str,"<NUM VAL=%.1f>",num);
   talk_str(str);  // メンバ関数の呼び出しのように　クラス名.関数名　でＯＫ？？
   
 }
-
-
 
 
 /*talk_str関数の定義づけ
@@ -30,4 +29,23 @@ void TORICA_talk::talk_str(char str[]){
 }
 
  //sprintf(x);//文字列を作る←数値を文字列に変換することで文字列のまま読むことができる
-  
+
+
+void TORICA_talk::callout_altitude(float alt){
+    talk_str("ko'udo");
+    Wire1.endTransmission();
+    talk_num(alt);
+    //talk_str("me'-torude'su");
+    Wire1.write('\r');
+    Wire1.endTransmission();
+}
+
+void TORICA_talk::callout_airspeed(float spd){
+    /*talk_str("sokudowa");
+    Wire1.endTransmission();*/
+    talk_num(spd);
+   /* Wire1.endTransmission();
+    talk_str("de'su");*/
+    Wire1.write('\r');
+    Wire1.endTransmission();
+}
