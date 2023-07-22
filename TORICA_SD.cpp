@@ -27,14 +27,13 @@ bool TORICA_SD::begin()
 
   SDisActive = true;
   return true;
-
 }
 
 void TORICA_SD::add_str(char str[])
 {
   if (SDisActive)
   {
-    dataFile.write(str,strlen(str));
+    dataFile.write(str, strlen(str));
   }
 }
 
@@ -71,29 +70,33 @@ void TORICA_SD::flash()
 {
   uint32_t SD_time = millis();
 
-  if (millis() - file_time > 10 * 60 * 1000)
+  if (SDisActive)
   {
-    dataFile.close();
-    new_file();
-    dataFile = SD.open(fileName, FILE_WRITE);
-  }
-  if (dataFile.size() >= TORICA_SD_MAX_FILE_SIZE)
-  {
-    SERIAL_USB.println("TORICA_SD_MAX_FILE_SIZE");
-    dataFile.close();
-    new_file();
-    dataFile = SD.open(fileName, FILE_WRITE);
+    if (millis() - file_time > 10 * 60 * 1000)
+    {
+      dataFile.close();
+      new_file();
+      dataFile = SD.open(fileName, FILE_WRITE);
+    }
+    if (dataFile.size() >= TORICA_SD_MAX_FILE_SIZE)
+    {
+      SERIAL_USB.println("TORICA_SD_MAX_FILE_SIZE");
+      dataFile.close();
+      new_file();
+      dataFile = SD.open(fileName, FILE_WRITE);
+    }
+
+    if (dataFile)
+    {
+      dataFile.flush();
+      // SERIAL_USB.println("SD_buf_count,SD_total");
+      // SERIAL_USB.print(",");
+      uint32_t SD_total = millis() - SD_time;
+      // SERIAL_USB.println(SD_total);
+    }
   }
 
-  if (dataFile)
-  {
-    dataFile.flush();
-    //SERIAL_USB.println("SD_buf_count,SD_total");
-    //SERIAL_USB.print(",");
-    uint32_t SD_total = millis() - SD_time;
-    //SERIAL_USB.println(SD_total);
-  }
-  else
+  if (retry && (!dataFile || !SDisActive))
   {
     SERIAL_USB.println("error opening file");
     end();
@@ -101,7 +104,8 @@ void TORICA_SD::flash()
   }
 }
 
-void TORICA_SD::end(){
+void TORICA_SD::end()
+{
   SDisActive = false;
   SD.end();
 }

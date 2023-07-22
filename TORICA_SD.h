@@ -27,7 +27,6 @@
 #define TORICA_SD_MAX_FILE_SIZE 1048576
 #endif
 
-
 #include <Arduino.h>
 #include <SPI.h>
 #include <SD.h>
@@ -35,9 +34,10 @@
 class TORICA_SD
 {
 public:
-  TORICA_SD(int _cs_SD)
+  TORICA_SD(int _cs_SD, bool _retry = true)
   {
     cs_SD = _cs_SD;
+    retry = _retry;
   }
 
   bool begin();
@@ -53,6 +53,7 @@ private:
   volatile int cs_SD = LED_BUILTIN;
   char fileName[16];
   File dataFile;
+  volatile bool retry = true;
   //volatile uint32_t file_size = 0;
   //volatile char SD_buf[2][TORICA_SD_BUF_SIZE];
   //volatile int SD_buf_index = 0;
