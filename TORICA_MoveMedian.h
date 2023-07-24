@@ -9,6 +9,7 @@ public:
 
   float add(float value);
   float get();
+  void print_list();
 
 private:
   float _buffer[N];          // index大 = value大
@@ -34,6 +35,25 @@ float TORICA_MoveMedian<N>::get()
 }
 
 template <uint16_t N>
+void TORICA_MoveMedian<N>::print_list()
+{
+  Serial.print("buffer: ");
+  for (uint16_t i = 0; i < N; i++)
+  {
+    Serial.print(_buffer[i]);
+    Serial.print(", ");
+  }
+  Serial.println();
+  Serial.print("index: ");
+  for (uint16_t i = 0; i < N; i++)
+  {
+    Serial.print(_buffer_index[i]);
+    Serial.print(", ");
+  }
+  Serial.println();
+}
+
+template <uint16_t N>
 float TORICA_MoveMedian<N>::add(float value)
 {
   // 一番古い値のindexを取得する
@@ -45,6 +65,8 @@ float TORICA_MoveMedian<N>::add(float value)
       break;
     }
   }
+  //Serial.print("oldest_index: ");
+  //Serial.println(oldest_index);
 
   // 一番古い値を削除し，index0側に値を寄せる
   // ToDo: 遅かったら memmove
@@ -63,13 +85,15 @@ float TORICA_MoveMedian<N>::add(float value)
   // 値の大小を比較しながら走査し，新しい値の場所を探す
   // ToDo: 二分探索
   uint16_t new_index;
-  for (new_index = 0; new_index < N; new_index++)
+  for (new_index = 0; new_index < N - 1; new_index++)
   {
     if (value < _buffer[new_index])
     {
       break;
     }
   }
+  //Serial.print("new_index: ");
+  //Serial.println(new_index);
 
   // 古い値をindexN側に一つずつずらす
   // ToDo: 遅かったら memmove
@@ -92,6 +116,8 @@ float TORICA_MoveMedian<N>::add(float value)
   {
     _median = _buffer[N / 2];
   }
+  //Serial.print("median: ");
+  //Serial.println(_median);
 
   return _median;
 }
