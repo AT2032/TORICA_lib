@@ -63,18 +63,11 @@ float TORICA_MoveMedian<N>::add(float value)
   // 値の大小を比較しながら走査し，新しい値の場所を探す
   // ToDo: 二分探索
   uint16_t new_index;
-  if (value < _buffer[0])
+  for (new_index = 0; new_index < N; new_index++)
   {
-    new_index = 0;
-  }
-  else
-  {
-    for (new_index = 0; new_index < N - 2; new_index++)
+    if (value < _buffer[new_index])
     {
-      if (value > _buffer[new_index + 1])
-      {
-        break;
-      }
+      break;
     }
   }
 
