@@ -18,7 +18,7 @@ class TORICA_talk {
 
     void talk_num(float num);
 
-    void callout_altitude(float alt);
+    void callout_koudo();
 
-    void callout_airspeed(float spd);
+    void callout_val(float val);
 };

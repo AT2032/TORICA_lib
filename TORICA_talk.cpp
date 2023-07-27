@@ -31,21 +31,14 @@ void TORICA_talk::talk_str(char str[]){
  //sprintf(x);//文字列を作る←数値を文字列に変換することで文字列のまま読むことができる
 
 
-void TORICA_talk::callout_altitude(float alt){
+void TORICA_talk::callout_koudo(){
     talk_str("ko'udo");
-    Wire1.endTransmission();
-    talk_num(alt);
-    //talk_str("me'-torude'su");
     Wire1.write('\r');
     Wire1.endTransmission();
 }
 
-void TORICA_talk::callout_airspeed(float spd){
-    /*talk_str("sokudowa");
-    Wire1.endTransmission();*/
-    talk_num(spd);
-   /* Wire1.endTransmission();
-    talk_str("de'su");*/
+void TORICA_talk::callout_val(float val){
+    talk_num(val);
     Wire1.write('\r');
     Wire1.endTransmission();
 }
