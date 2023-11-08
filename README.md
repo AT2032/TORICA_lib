@@ -1,4 +1,7 @@
 # TORICA_lib
+このリポジトリは23代のOrganizationからForkしているので，**ローカルにクローンする際は注意が必要です．**
+詳細はNotionの「GitHubの使い方」ページ内の「Forkの注意点」を参照してください．
+
 このリポジトリを```Documents\Arduino\libraries\```にcloneしてインストールします．
   ![image](https://user-images.githubusercontent.com/29813058/231634278-df5476ed-98a7-4a08-837d-84837e51bb13.png)
  
