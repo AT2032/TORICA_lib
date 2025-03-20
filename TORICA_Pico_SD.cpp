@@ -1,24 +1,17 @@
-#include "TORICA_SD.h"
+#include "TORICA_Pico_SD.h"
 #include <Arduino.h>
 #include <SPI.h>
 #include <SD.h>
 
-bool TORICA_SD::begin()
+bool TORICA_Pico_SD::begin()
 {
   SERIAL_USB.print("Initializing SD card...");
-#if defined(SEEED_XIAO_RP2040)
+#if defined(RASPBERRY_PI_PICO)
   SPI.setRX(SD_SPI_MISO);
   SPI.setCS(SD_SPI_CSn);
   SPI.setSCK(SD_SPI_SCK);
   SPI.setTX(SD_SPI_MOSI);
   if (!SD.begin(cs_SD, SPI))
-#elif defined(RASPBERRY_PI_PICO)
-  SPI.setRX(SD_SPI_MISO);
-  SPI.setCS(SD_SPI_CSn);
-  SPI.setSCK(SD_SPI_SCK);
-  SPI.setTX(SD_SPI_MOSI);
-  if (!SD.begin(cs_SD, SPI))
-
 #else
   if (!SD.begin(cs_SD))
 #endif
@@ -36,7 +29,7 @@ bool TORICA_SD::begin()
   return true;
 }
 
-void TORICA_SD::add_str(char str[])
+void TORICA_Pico_SD::add_str(char str[])
 {
   if (SDisActive)
   {
@@ -44,7 +37,7 @@ void TORICA_SD::add_str(char str[])
   }
 }
 
-void TORICA_SD::new_file()
+void TORICA_Pico_SD::new_file()
 {
   String s;
   int fileNum = 0;
@@ -73,7 +66,7 @@ void TORICA_SD::new_file()
   file_time = millis();
 }
 
-void TORICA_SD::flash()
+void TORICA_Pico_SD::flash()
 {
   uint32_t SD_time = millis();
 
@@ -111,7 +104,7 @@ void TORICA_SD::flash()
   }
 }
 
-void TORICA_SD::end()
+void TORICA_Pico_SD::end()
 {
   SDisActive = false;
   SD.end();

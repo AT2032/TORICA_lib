@@ -6,7 +6,7 @@ class TORICA_UART {
     }
 
     int readUART();
-    float UART_data[16];
+    float UART_data[32];
 
   private:
     int i_buff = 0;

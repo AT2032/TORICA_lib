@@ -3,29 +3,19 @@
 // DUE RAM 96KB
 //#define TORICA_SD_BUF_SIZE 4096
 #define SERIAL_USB SerialUSB
-#define TORICA_SD_MAX_FILE_SIZE 1048576
+#define TORICA_Pico_SD_MAX_FILE_SIZE 1048576
 #elif defined(ARDUINO_SEEED_XIAO_M0)
 // XIAO RAM 32KB
 //#define TORICA_SD_BUF_SIZE 4096
 #define SERIAL_USB Serial
-#define TORICA_SD_MAX_FILE_SIZE 1048576
+#define TORICA_Pico_SD_MAX_FILE_SIZE 1048576
 // RP2040 RAM 264KB
-#elif defined(SEEED_XIAO_RP2040)
-//#define TORICA_SD_BUF_SIZE 4096
-#define SERIAL_USB Serial
-#define TORICA_SD_MAX_FILE_SIZE 1048576
-// https://files.seeedstudio.com/wiki/XIAO-RP2040/res/Seeed-Studio-XIAO-RP2040-v1.3.pdf
-// setCSはハードウェアCSピンじゃないとpanicするので一旦17ピン(赤LED)で設定
-#define SD_SPI_SCK (2)
-#define SD_SPI_MOSI (3)
-#define SD_SPI_MISO (4)
-#define SD_SPI_CSn (17)
 #elif defined(RASPBERRY_PI_PICO)
 //#define TORICA_SD_BUF_SIZE 4096
 #define SERIAL_USB Serial
 #define TORICA_Pico_SD_MAX_FILE_SIZE 1048576
 // https://files.seeedstudio.com/wiki/XIAO-RP2040/res/Seeed-Studio-XIAO-RP2040-v1.3.pdf
-// setCSはハードウェアCSピンじゃないとpanicするので一旦25ピン(LED)で設定
+// setCSはハードウェアCSピンじゃないとpanicするので一旦17ピン(赤LED)で設定
 #define SD_SPI_SCK (18)
 #define SD_SPI_MOSI (19)
 #define SD_SPI_MISO (16)
@@ -41,10 +31,10 @@
 #include <SPI.h>
 #include <SD.h>
 
-class TORICA_SD
+class TORICA_Pico_SD
 {
 public:
-  TORICA_SD(int _cs_SD, bool _retry = true)
+  TORICA_Pico_SD(int _cs_SD, bool _retry = true)
   {
     cs_SD = _cs_SD;
     retry = _retry;
